@@ -101,6 +101,7 @@ class linkedList {
         current?.next = middleNode
     }
 
+    // is list a cycle
     func isListCycle() -> Bool {
         var slow: Node? = head
         var fast: Node? = head
@@ -116,6 +117,7 @@ class linkedList {
         return false
     }
 
+    // find the start of the cycle
     func cycleStartAt() -> Node? {
         var slow: Node? = head
         var fast: Node? = head
@@ -140,6 +142,52 @@ class linkedList {
         }
 
         return slow // Start of the cycle
+    }
+
+    // reverse the list
+    func reverseList(node: Node?) -> Node? {
+        var prev: Node? = nil
+        var current = node
+
+        while current != nil {
+            let nextTemp = current?.next
+            current?.next = prev 
+            prev = current
+            current = nextTemp
+        }
+        return prev
+    }
+    
+    // is list a palindrome
+    func isPalindrome() -> Bool {
+        var slow: Node? = head
+        var fast: Node? = head 
+
+        // Find the middle of the list
+        while fast != nil && fast?.next != nil {
+            slow = slow?.next
+            fast = fast?.next?.next
+        }
+
+        // Reverse the second half of the list
+        var secondHalfStart = reverseList(node: slow)
+        var firstHalfStart = head
+        var isPal = true
+        
+        var p1 = firstHalfStart
+        var p2 = secondHalfStart
+
+        while p2 != nil {
+            if p1?.value != p2?.value {
+                isPal = false
+                break
+            }
+            p1 = p1?.next
+            p2 = p2?.next
+        }
+
+        _ = reverseList(node: secondHalfStart) // Restore the list
+        return isPal
     }
     
 }
