@@ -170,8 +170,8 @@ class linkedList {
         }
 
         // Reverse the second half of the list
-        var secondHalfStart = reverseList(node: slow)
-        var firstHalfStart = head
+        let secondHalfStart = reverseList(node: slow)
+        let firstHalfStart = head
         var isPal = true
         
         var p1 = firstHalfStart
@@ -188,6 +188,32 @@ class linkedList {
 
         _ = reverseList(node: secondHalfStart) // Restore the list
         return isPal
+    }
+
+    // remove nth node form the list
+    func removeNthNode(n: Int) {
+        let dummy = Node(val: 0)
+
+        dummy.next = head
+
+        var slow: Node? = dummy
+        var fast: Node? = dummy
+
+        for _ in 0...n {
+            guard let nextFast = fast?.next else {
+                return
+            }
+            fast = nextFast
+        }
+
+        while fast != nil {
+            slow = slow?.next
+            fast = fast?.next
+        }
+
+        slow?.next = slow?.next?.next
+
+        head = dummy.next
     }
     
 }
