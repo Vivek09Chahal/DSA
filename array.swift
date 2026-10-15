@@ -88,7 +88,109 @@ class Arrays {
         }
     }
 
+    // Maximum Subarray Sum of Size K
+    func maxSubArraySumOfSizeK(k: Int) -> Int {
+        guard arr.count >= k else { return 0 }
+        
+        var currentSum = 0
 
+        for i in 0..<k {
+            currentSum += arr[i]
+        }
+        var maxSum = currentSum
+
+        for i in k..<arr.count {
+            currentSum += arr[i] - arr[i - k]
+            maxSum = max(maxSum, currentSum)
+        }
+        return maxSum
+    }
+
+    // contain duplicate
+    func containDuplicate() -> Bool {
+        var seen: Set<Int> = Set()
+
+        for num in arr {
+            if seen.contains(num) {
+                return true
+            }
+            seen.insert(num)
+        }
+        return false
+    }
+ 
+    // contain duplicate II
+    func containDuplicateII(k: Int) -> Bool {
+        var seen: [Int: Int] = [:]
+
+        for (i, num) in arr.enumerated() {
+            if let lastIndex = seen[num], i - lastIndex <= k {
+                return true
+            }
+            seen[num] = i
+        }
+        return false
+    }
+
+    // longest substring without repeating characters
+    func longestSubstring(_ s: String) -> Int {
+        let chars = Array(s)
+
+        var left = 0
+        var maxLength = 0
+        var seen: Set<Character> = []
+
+        for right in 0..<chars.count {
+            while seen.contains(chars[right]) {
+                seen.remove(chars[left])
+                left += 1
+            }
+            seen.insert(chars[right])
+            maxLength = max(maxLength, right - left + 1)
+        }
+        return maxLength
+    }
+
+    // longest string()
+    func longestString(_ s: String, _ k: Int) -> Int {
+        let chars = Array(s)
+
+        var left = 0
+        var maxLength = 0
+        var maxFreq = 0
+        var count: [Character: Int] = [:]
+
+        for right in  0..<chars.count {
+            count[chars[right], default: 0] += 1
+
+            maxFreq = max(maxFreq, count[chars[right]]!)
+
+            while (right - left + 1) - maxFreq > k {
+                count[chars[left]]! -= 1
+                left += 1
+            }
+
+            maxLength = max(maxLength, right - left + 1)
+        }
+        return maxLength
+    }
+
+    // Permutation in String
+//     func stringPermutation(s1: String, s2: String) -> Bool {
+//         guard s1.count <= s2.count else { return false}
+// 
+//         let s1Arr = Array(s1)
+//         let s2Arr = Array(s2)
+// 
+//         var s1Count = Array(repeating: 0, count: 26)
+//         var s2Count = Array(repeating: 0, count: 26)
+//         let asciiA = Int(Character("a").asciiValue!)
+// 
+//         for i in 0..<s1Arr.count {
+//             s1Count[Int(s1Arr[i].asciiValue!) - asciiA] += 1
+//             s2Count[Int(s2Arr[i].asciiValue!) - asciiA] += 1
+//         }
+//     }
     
 }
 
