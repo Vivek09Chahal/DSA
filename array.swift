@@ -151,6 +151,11 @@ class Arrays {
         return maxLength
     }
 
+    // minimum window substring
+    func minWindowSubstring() {
+        
+    }
+
     // longest string()
     func longestString(_ s: String, _ k: Int) -> Int {
         let chars = Array(s)
@@ -176,21 +181,34 @@ class Arrays {
     }
 
     // Permutation in String
-//     func stringPermutation(s1: String, s2: String) -> Bool {
-//         guard s1.count <= s2.count else { return false}
-// 
-//         let s1Arr = Array(s1)
-//         let s2Arr = Array(s2)
-// 
-//         var s1Count = Array(repeating: 0, count: 26)
-//         var s2Count = Array(repeating: 0, count: 26)
-//         let asciiA = Int(Character("a").asciiValue!)
-// 
-//         for i in 0..<s1Arr.count {
-//             s1Count[Int(s1Arr[i].asciiValue!) - asciiA] += 1
-//             s2Count[Int(s2Arr[i].asciiValue!) - asciiA] += 1
-//         }
-//     }
+    func stringPermutation(s1: String, s2: String) -> Bool {
+        guard s1.count <= s2.count else { return false}
+
+        let s1Arr = Array(s1)
+        let s2Arr = Array(s2)
+
+        var s1Count = Array(repeating: 0, count: 26)
+        var s2Count = Array(repeating: 0, count: 26)
+        let asciiA = Int(Character("a").asciiValue!)
+
+        for i in 0..<s1Arr.count {
+            s1Count[Int(s1Arr[i].asciiValue!) - asciiA] += 1
+            s2Count[Int(s2Arr[i].asciiValue!) - asciiA] += 1
+        }
+
+        if s1Count == s2Count { return true }
+
+        for i in s1Arr.count..<s2Arr.count {
+            s2Count[Int(s2Arr[i].asciiValue!) - asciiA] += 1
+            s2Count[Int(s2Arr[i - s1Arr.count].asciiValue!) - asciiA] -= 1
+
+            if s1Count == s2Count { return true }
+        }
+
+        return false
+    }
+
+    //
     
 }
 
